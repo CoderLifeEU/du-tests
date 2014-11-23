@@ -1,7 +1,11 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use yii\bootstrap\Nav;
+use yii\bootstrap\NavBar;
+use yii\widgets\Breadcrumbs;
+use yii\helpers\VarDumper;
+use \yii\helpers\Url;
 /**
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
@@ -34,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="form-group">
         <div class="col-lg-12">
-            <?= Html::submitButton('Update', ['class' => 'btn btn-primary', 'name' => 'test-create-button']) ?>
+            <?= Html::submitButton('Update', ['class' => 'btn btn-primary', 'name' => 'test-update-button']) ?>
         </div>
     </div>
 
@@ -42,3 +46,38 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
 </div>
+
+ <div class="row">
+        <div class="col-md-1 col-md-offset-11">
+            <a href="<?php echo Url::to(array('test/createquestion','testid'=>$model->id)); ?>" class="btn btn-success">New</a>
+        </div>
+        
+        <div class="col-md-12" style="margin-top:20px;">
+        <table id="tests" class="table table-bordered table-striped dataTable" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Question Name</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+             <tbody>
+                <tr>
+                </tr>
+             </tbody>
+        </table>
+    </div>
+        
+    </div>
+
+<?php
+if (YII_ENV_DEV) 
+{
+    $this->registerJsFile( 
+        'js/updatetest.js', 
+        ['depends'=>'app\assets\AppAsset']
+    );
+}
+?>

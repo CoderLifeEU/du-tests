@@ -42,7 +42,9 @@ $config = [
                                 'createtest' =>'test/createtest',
                                 'updatetest' => 'test/updatetest',
                                 'gettestsfeed' =>'test/gettestsfeed',
-                                'passtest' => 'test/passtest'
+                                'passtest' => 'test/passtest',
+                                'getquestionsfeed'=>'test/getquestionsfeed',
+                                'createquestion' =>'test/createquestion'
 			),
 		),
     ],

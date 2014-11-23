@@ -70,6 +70,25 @@ class TestController extends Controller
             ));
     }
     
+    public function actionCreatequestion($testid)
+    {
+        $model = new \app\models\Question();
+        $model->test_id = $testid;
+        
+        $model->load(Yii::$app->request->post());
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate(null, false)) 
+        {
+            $model->save();
+            
+            return $this->redirect(array('test/updatetest','id'=>$model->test_id)); 
+        }
+        
+        return $this->render('createquestion', array(
+                        'model' => $model,
+            ));
+    }
+    
     public function actionUpdatetest($id)
     {
         $model = \app\models\Test::getTest($id);
@@ -115,6 +134,38 @@ class TestController extends Controller
         $response = array("success"=>$success,"data"=>$tests);
             
         return json_encode($response);
+        
+    }
+    
+    public function actionGetquestionsfeed($id)
+    {
+        $questions = \app\models\Question::getTestQuestionsAsArray($id);
+        
+        $success=true;
+        
+        $questioncount = count($questions);
+        
+        if($questioncount<1)
+        {
+            $success = false;
+        }
+        
+        $i=0;
+        
+        while($i<$questioncount)
+        {
+                $questions[$i]['actions']='<div class="text-center"><div class="btn-group btn-group-sm">'.
+                                        '<a type="button" href="updatequestion?id='.$questions[$i]['id'].'"class="btn btn-default btn-update-relationship" data-id="'.$questions[$i]['id'].'">Update</a>'.
+                                        '<a type="button" class="btn disabled btn-danger btn-delete-relationship" data-id="'.$questions[$i]['id'].'">Delete</a>'.
+                                      '</div></div>';
+                $i++;
+        }
+            
+        
+        $response = array("success"=>$success,"data"=>$questions);
+            
+        return json_encode($response);
+        
         
     }
 

@@ -68,4 +68,10 @@ class Question extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Test::className(), ['id' => 'test_id']);
     }
+    
+    public static function getTestQuestionsAsArray($testid)
+    {
+        $obj = Question::find()->asArray()->where('test_id = :id', ['id'=>$testid])->all();
+        return $obj;
+    }
 }
