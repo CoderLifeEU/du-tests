@@ -50,7 +50,7 @@ class MaskedInput extends InputWidget
      * - `9`: represents a numeric character (0-9)
      * - `*`: represents an alphanumeric character (A-Z, a-z, 0-9)
      * - `[` and `]`: anything entered between the square brackets is considered optional user input. This is
-     *    based on the `optionalmarker` setting in [[clientOptions]].
+     *   based on the `optionalmarker` setting in [[clientOptions]].
      *
      * Additional definitions can be set through the [[definitions]] property.
      */
@@ -59,7 +59,7 @@ class MaskedInput extends InputWidget
      * @var array custom mask definitions to use. Should be configured as `maskSymbol => settings`, where
      *
      * - `maskSymbol` is a string, containing a character to identify your mask definition and
-     * - `settings` is an array, consisiting of the following entries:
+     * - `settings` is an array, consisting of the following entries:
      *   - `validator`: string, a JS regular expression or a JS function.
      *   - `cardinality`: int, specifies how many characters are represented and validated for the definition.
      *   - `prevalidator`: array, validate the characters before the definition cardinality is reached.
@@ -125,6 +125,7 @@ class MaskedInput extends InputWidget
      * - 'data-plugin-name' the name of the plugin
      *
      * @param View $view the view instance
+     * @author [Thiago Talma](https://github.com/thiagotalma)
      */
     protected function hashPluginOptions($view)
     {

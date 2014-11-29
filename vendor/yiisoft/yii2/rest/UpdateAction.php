@@ -10,6 +10,7 @@ namespace yii\rest;
 use Yii;
 use yii\base\Model;
 use yii\db\ActiveRecord;
+use yii\web\ServerErrorHttpException;
 
 /**
  * UpdateAction implements the API endpoint for updating a model.
@@ -24,6 +25,7 @@ class UpdateAction extends Action
      */
     public $scenario = Model::SCENARIO_DEFAULT;
 
+
     /**
      * Updates an existing model.
      * @param string $id the primary key of the model.
@@ -32,7 +34,7 @@ class UpdateAction extends Action
      */
     public function run($id)
     {
-        /** @var ActiveRecord $model */
+        /* @var $model ActiveRecord */
         $model = $this->findModel($id);
 
         if ($this->checkAccess) {
@@ -41,7 +43,9 @@ class UpdateAction extends Action
 
         $model->scenario = $this->scenario;
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
-        $model->save();
+        if ($model->save() === false && !$model->hasErrors()) {
+            throw new ServerErrorHttpException('Failed to update the object for unknown reason.');
+        }
 
         return $model;
     }

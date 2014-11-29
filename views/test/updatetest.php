@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php $form = ActiveForm::begin([
         'id' => 'test-create-form',
-        'options' => ['class' => 'form-horizontal'],
+        'options' => ['class' => 'form-horizontal','enctype'=>'multipart/form-data'],
         'fieldConfig' => [
             'template' => "{label}\n<div class=\"col-lg-12\">{input}</div>\n<div class=\"col-lg-12\">{error}</div>",
             'labelOptions' => ['class' => 'col-lg-1 control-label'],
@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
 if (YII_ENV_DEV) 
 {
     $this->registerJsFile( 
-        'js/updatetest.js', 
+        'web/js/updatetest.js', 
         ['depends'=>'app\assets\AppAsset']
     );
 }

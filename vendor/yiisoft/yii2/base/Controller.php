@@ -36,6 +36,7 @@ class Controller extends Component implements ViewContextInterface
      * @event ActionEvent an event raised right after executing a controller action.
      */
     const EVENT_AFTER_ACTION = 'afterAction';
+
     /**
      * @var string the ID of this controller.
      */
@@ -61,10 +62,12 @@ class Controller extends Component implements ViewContextInterface
      * by [[run()]] when it is called by [[Application]] to run an action.
      */
     public $action;
+
     /**
      * @var View the view object that can be used to render views or view files.
      */
     private $_view;
+
 
     /**
      * @param string $id the ID of this controller.
@@ -131,6 +134,7 @@ class Controller extends Component implements ViewContextInterface
         $modules = [];
         $runAction = true;
 
+        // call beforeAction on modules
         foreach ($this->getModules() as $module) {
             if ($module->beforeAction($action)) {
                 array_unshift($modules, $module);
@@ -142,16 +146,17 @@ class Controller extends Component implements ViewContextInterface
 
         $result = null;
 
-        if ($runAction) {
-            if ($this->beforeAction($action)) {
-                $result = $action->runWithParams($params);
-                $result = $this->afterAction($action, $result);
-            }
-        }
+        if ($runAction && $this->beforeAction($action)) {
+            // run the action
+            $result = $action->runWithParams($params);
 
-        foreach ($modules as $module) {
-            /** @var Module $module */
-            $result = $module->afterAction($action, $result);
+            $result = $this->afterAction($action, $result);
+
+            // call afterAction on modules
+            foreach ($modules as $module) {
+                /* @var $module Module */
+                $result = $module->afterAction($action, $result);
+            }
         }
 
         $this->action = $oldAction;
@@ -346,7 +351,7 @@ class Controller extends Component implements ViewContextInterface
      * - a path alias (e.g. "@app/views/layouts/main");
      * - an absolute path (e.g. "/main"): the layout name starts with a slash. The actual layout file will be
      *   looked for under the [[Application::layoutPath|layout path]] of the application;
-     * - a relative path (e.g. "main"): the actual layout layout file will be looked for under the
+     * - a relative path (e.g. "main"): the actual layout file will be looked for under the
      *   [[Module::layoutPath|layout path]] of the context module.
      *
      * If the layout name does not contain a file extension, it will use the default one `.php`.
@@ -435,7 +440,7 @@ class Controller extends Component implements ViewContextInterface
      * Please refer to [[render()]] on how to specify this parameter.
      * @throws InvalidParamException if an invalid path alias is used to specify the layout.
      */
-    protected function findLayoutFile($view)
+    public function findLayoutFile($view)
     {
         $module = $this->module;
         if (is_string($this->layout)) {

@@ -7,6 +7,10 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
+        'request' => [
+            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
+            'cookieValidationKey' => 'LtZwZbAL1Z0syBA-QaGdbP0xHQToujhn',
+        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
@@ -44,7 +48,8 @@ $config = [
                                 'gettestsfeed' =>'test/gettestsfeed',
                                 'passtest' => 'test/passtest',
                                 'getquestionsfeed'=>'test/getquestionsfeed',
-                                'createquestion' =>'test/createquestion'
+                                'createquestion' =>'test/createquestion',
+                                'showquestionimage' =>'image/showquestionimage'
 			),
 		),
     ],
@@ -53,11 +58,11 @@ $config = [
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
-    $config['bootstrap'][] = 'debug';
+    /*$config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = 'yii\debug\Module';
 
     $config['bootstrap'][] = 'gii';
-    $config['modules']['gii'] = 'yii\gii\Module';
+    $config['modules']['gii'] = 'yii\gii\Module';*/
 }
 
 return $config;

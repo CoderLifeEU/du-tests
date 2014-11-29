@@ -72,21 +72,51 @@ class TestController extends Controller
     
     public function actionCreatequestion($testid)
     {
-        $model = new \app\models\Question();
+        $model = new \app\models\QuestionForm();
         $model->test_id = $testid;
         
-        $model->load(Yii::$app->request->post());
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate(null, false)) 
+      
+        if ($model->load(Yii::$app->request->post())&& $model->validate(null, false)) 
         {
-            $model->save();
+            $dir = Yii::getAlias('@app/uploads/questions');
+            $uploaded = false;
+            $file = \yii\web\UploadedFile::getInstance($model,'image');
+            $type = $file->type;
+            
+
+            if($file->size!=0 && ($type=='image/png' || $type=='image/jpeg'))
+            {
+            $filetype='';
+            if($type=='image/png')
+            {
+                $filetype='.png';
+            }
+            else if($type=='image/jpeg')
+            {
+                $filetype='.jpg';
+            }
+
+            $filename =  uniqid().$filetype;
+            $uploaded = $file->saveAs($dir.'/'.$filename);
+
+            $model->image = $filename.$filetype;
+            
+            $domainmodel = new \app\models\Question();
+            $domainmodel->test_id = $model->test_id;
+            $domainmodel->name = $model->name;
+            $domainmodel->description = $model->description;
+            $domainmodel->image = $model->image;
+            
+            $domainmodel->save();
+            
             
             return $this->redirect(array('test/updatetest','id'=>$model->test_id)); 
+            }
         }
-        
         return $this->render('createquestion', array(
                         'model' => $model,
             ));
+        
     }
     
     public function actionUpdatetest($id)
