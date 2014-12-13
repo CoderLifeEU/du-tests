@@ -119,6 +119,100 @@ class TestController extends Controller
         
     }
     
+	
+	public function actionCreateanswer($questionid)
+    {
+        $model = new \app\models\QuestionForm();
+        $model->question_id = $questionid;
+        
+      
+        if ($model->load(Yii::$app->request->post())&& $model->validate(null, false)) 
+        {
+            $dir = Yii::getAlias('@app/uploads/answers');
+            $uploaded = false;
+            $file = \yii\web\UploadedFile::getInstance($model,'image');
+            $type = $file->type;
+            
+
+            if($file->size!=0 && ($type=='image/png' || $type=='image/jpeg'))
+            {
+            $filetype='';
+            if($type=='image/png')
+            {
+                $filetype='.png';
+            }
+            else if($type=='image/jpeg')
+            {
+                $filetype='.jpg';
+            }
+
+            $filename =  uniqid().$filetype;
+            $uploaded = $file->saveAs($dir.'/'.$filename);
+
+            $model->image = $filename.$filetype;
+            
+            $domainmodel = new \app\models\Answer();
+            $domainmodel->question_id = $model->question_id;
+            $domainmodel->name = $model->name;
+            $domainmodel->description = $model->description;
+            $domainmodel->image = $model->image;
+            
+            $domainmodel->save();
+            
+            
+            return $this->redirect(array('question/updateanswer','id'=>$model->answer_id)); 
+            }
+        }
+        return $this->render('createanswer', array(
+                        'model' => $model,
+            ));
+        
+    }//actionCreateanswer
+	
+	
+	
+		    public function actionUpdatequestion($id)
+    {
+        $model = \app\models\Question::getQuestion($id);
+        
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate(null, false)) 
+        {
+            $model->save();
+            
+            return $this->redirect(array('test/showtests')); 
+        }
+        
+        return $this->render('updatequestion', array(
+                        'model' => $model,
+            ));
+    }//actionUpdatequestion
+	
+	
+	
+	
+	
+	
+	    public function actionUpdateanswer($id)
+    {
+        $model = \app\models\Answer::getAnswer($id);
+        
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate(null, false)) 
+        {
+            $model->save();
+            
+            return $this->redirect(array('test/showtests')); 
+        }
+        
+        return $this->render('updateanswer', array(
+                        'model' => $model,
+            ));
+    }//actionUpdateanswer
+	
+	
+	
+	
     public function actionUpdatetest($id)
     {
         $model = \app\models\Test::getTest($id);
