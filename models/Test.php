@@ -71,4 +71,10 @@ class Test extends \yii\db\ActiveRecord
         
         return $obj;
     }
+    
+    public static function prepareTest($id)
+    {
+        $obj = Test::find()->with('questions')->asArray()->where('id = :id', ['id'=>$id])->one();
+        return $obj;
+    }
 }

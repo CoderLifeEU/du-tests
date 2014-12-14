@@ -64,4 +64,10 @@ class Answer extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Question::className(), ['id' => 'question_id']);
     }
+    
+    public static function getQuestionAnswersAsArray($questionid)
+    {
+        $obj = Answer::find()->asArray()->where('question_id = :id', ['id'=>$questionid])->all();
+        return $obj;
+    }
 }

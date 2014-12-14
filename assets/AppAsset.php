@@ -21,11 +21,16 @@ class AppAsset extends AssetBundle
         'libs/font-awesome-4.1.0/css/font-awesome.css',
         'libs/DataTables-1.10.0/media/css/jquery.dataTables.css',
         'libs/DataTables-1.10.0/examples/resources/syntax/shCore.css',
+        'libs/jquery-ui-1.11.2.custom/jquery-ui.css',
+        'libs/select2-3.5.0/select2.css',
+        'libs/select2-3.5.0/select2-bootstrap.css',
         'css/site.css',
     ];
     public $js = [
             'libs/DataTables-1.10.0/media/js/jquery.dataTables.js',
             'libs/handlebars-v1.3.0.js',
+            'libs/jquery-ui-1.11.2.custom/jquery-ui.js',
+            'libs/select2-3.5.0/select2.js',
             'js/dutests.js',
     ];
     public $depends = [

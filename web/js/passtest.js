@@ -8,6 +8,7 @@ console.log("Pass test");
     
     var config = {'feedurl': testfeedurl};  
     dutestsWidget.dutests(config).init();
+    $("#e1").select2();
     
 });
 

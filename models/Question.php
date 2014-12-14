@@ -12,6 +12,8 @@ use Yii;
  * @property string $description
  * @property string $image
  * @property integer $test_id
+ * @property integer $requiredanswercount
+ * @property string $controltype
  *
  * @property Answer[] $answers
  * @property Test $test
@@ -33,9 +35,10 @@ class Question extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'test_id'], 'required'],
-            [['test_id'], 'integer'],
+            [['test_id', 'requiredanswercount'], 'integer'],
             [['name', 'image'], 'string', 'max' => 245],
-            [['description'], 'string', 'max' => 550]
+            [['description'], 'string', 'max' => 550],
+            [['controltype'], 'string', 'max' => 45]
         ];
     }
 
@@ -50,6 +53,8 @@ class Question extends \yii\db\ActiveRecord
             'description' => 'Description',
             'image' => 'Image',
             'test_id' => 'Test ID',
+            'requiredanswercount' => 'Requiredanswercount',
+            'controltype' => 'Controltype',
         ];
     }
 
@@ -68,10 +73,22 @@ class Question extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Test::className(), ['id' => 'test_id']);
     }
-    
     public static function getTestQuestionsAsArray($testid)
     {
         $obj = Question::find()->asArray()->where('test_id = :id', ['id'=>$testid])->all();
         return $obj;
     }
+    
+    public static function getControlTypes()
+    {
+        $obj = array('radio'=>'radio','checkbox'=>'checkbox','input'=>'input');
+        return $obj;
+    }
+    public static function getQuestion($id)
+    {
+        $obj = Question::find()->where('id = :id', ['id'=>$id])->one();
+        
+        return $obj;
+    }
+
 }

@@ -49,7 +49,9 @@ $config = [
                                 'passtest' => 'test/passtest',
                                 'getquestionsfeed'=>'test/getquestionsfeed',
                                 'createquestion' =>'test/createquestion',
-                                'showquestionimage' =>'image/showquestionimage'
+                                'showquestionimage' =>'image/showquestionimage',
+                                'updatequestion' => 'test/updatequestion',
+                                'preparetest' => 'test/preparetest'
 			),
 		),
     ],

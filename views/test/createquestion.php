@@ -27,6 +27,15 @@ use kartik\widgets\FileInput;
                 ]
         ]); 
         ?>
+<?php echo $form->field($model, 'requiredanswercount')->textInput(); ?>
+
+<?php echo  $form->field($model, 'controltype')
+        ->dropDownList(
+            $model->controltypes,           // Flat array ('id'=>'label')
+            ['prompt'=>'']    // options
+        )
+    ?>
+<?php echo Html::activeHiddenInput($model, 'id') ?>
 
 <?php echo Html::activeHiddenInput($model, 'test_id') ?>
             

@@ -89,3 +89,157 @@ a.desc:after {
     padding: 10px 20px;
     margin: 0 0 15px 0;
 }
+/* Wizard */
+ 
+.steps-wizard .arrow
+{
+    font-size: 40px;
+    line-height: 0.3;
+    color: #C8BCBC;;
+    display: block;
+}
+.steps-wizard .steps
+{
+    margin: 20px 0;
+}
+.steps-wizard .steps ul
+{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    white-space: nowrap;
+    overflow-x: hidden;
+}
+ 
+.steps-wizard .steps ul li
+{
+    display: inline-block;
+    width: 150px;
+    margin: 0 5px 0 0;
+    text-align: center;
+    border: 1px solid #fff;
+}
+.steps-wizard .steps ul li a
+{
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+}
+.steps-wizard .steps ul li.selected
+{
+    border-color: #CD582D;
+}
+.steps-wizard .steps ul li.selected a
+{
+    background: #CD582D;
+    color: #fff;
+}
+.steps-wizard .steps ul li a .step-number
+{
+    font-size: 15px;
+    font-weight: bold;
+}
+.steps-wizard .steps-content
+{
+    margin: 10px 0;
+}
+.steps-wizard .steps-content .step-content.loading
+{
+    min-height: 500px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+}
+.steps-wizard .steps-content .step-content.loading i
+{
+    font-size: 40px;
+}
+.steps-wizard .step-content .alert
+{
+    margin-top: 35px;
+}
+.steps > div,
+.steps > ul
+{
+    float: left;
+}
+.steps-scrollpane
+{
+    width: 84%;
+}
+.steps-arrow
+{
+    width: 8%;
+}
+ 
+@media (min-width: 768px)
+{
+    .steps-arrow
+    {
+        width: 40px
+    }
+ 
+    .steps-scrollpane
+    {
+        width: 640px;
+    }    
+    .steps-wizard .steps ul li
+    {
+        width: 145px;
+        margin: 0 15px 0 0;
+    }
+}
+ 
+@media (min-width: 992px)
+{
+    .btn-sm, .btn-group-sm > .btn
+    {
+        padding: 5px 7px;
+    }
+    .steps-scrollpane
+    {
+        width: 860px;
+    }
+    .steps-arrow
+    {
+        width: 40px
+    }
+    .steps-wizard .steps ul li
+    {
+        width: 135px;
+        margin: 0 5px 0 0;
+    }
+}
+ 
+@media (min-width: 1200px)
+{
+    .steps-arrow
+    {
+        width: 40px
+    }
+ 
+    .steps-scrollpane
+    {
+        width: 1060px;
+    }
+ 
+    .steps-wizard .steps ul li
+    {
+        width: 125px;
+        margin: 0 4px 0 0;
+    }
+}
+
+.steps-content{
+    min-height:700px;
+}
+
+.step.inactive{
+    opacity:0.5;
+}
+.step.active{
+    opacity:1;
+}
