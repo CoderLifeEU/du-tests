@@ -130,9 +130,9 @@ class TestController extends Controller
 	
     public function actionCreateanswer($questionid)
     {
-        $model = new \app\models\QuestionForm();
+        $model = new \app\models\AnswerForm();
         $model->question_id = $questionid;
-        
+       
       
         if ($model->load(Yii::$app->request->post())&& $model->validate(null, false)) 
         {
@@ -168,9 +168,10 @@ class TestController extends Controller
             $domainmodel->save();
             
             
-            return $this->redirect(array('question/updateanswer','id'=>$model->answer_id)); 
+            return $this->redirect(array('test/updateanswer','id'=>$model->id)); 
             }
         }
+		
         return $this->render('createanswer', array(
                         'model' => $model,
             ));
@@ -266,9 +267,25 @@ class TestController extends Controller
 	
         public function actionUpdateanswer($id)
         {
-            $model = \app\models\Answer::getAnswer($id);
+		 //$model = new \app\models\Answer();
+         //$model = \app\models\Answer::getAnswer($id);
+        $model = new \app\models\AnswerForm();
+        $domainmodel = new \app\models\Answer();
+        $domainmodel = \app\models\Answer::getAnswer($id);
 
-
+			
+		$model->question_id = $domainmodel->question_id;
+        $model->name = $domainmodel->name;
+        $model->description = $domainmodel->description;
+        $model->id = $domainmodel->id;
+        $model->image = $domainmodel->image;
+        $model->isvalid = $domainmodel->isvalid;
+        
+        $model->score = $domainmodel->score;
+			
+			
+			
+			
             if ($model->load(Yii::$app->request->post()) && $model->validate(null, false)) 
             {
                 $model->save();

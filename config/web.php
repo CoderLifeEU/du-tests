@@ -51,7 +51,11 @@ $config = [
                                 'createquestion' =>'test/createquestion',
                                 'showquestionimage' =>'image/showquestionimage',
                                 'updatequestion' => 'test/updatequestion',
-                                'preparetest' => 'test/preparetest'
+                                'preparetest' => 'test/preparetest',
+								'createanswer' =>'test/createanswer',
+								'updateanswer' => 'test/updateanswer',
+								'showanswerimage' =>'image/showanswerimage'
+								
 			),
 		),
     ],

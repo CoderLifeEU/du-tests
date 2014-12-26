@@ -39,7 +39,7 @@ $this->title = 'Existing tests';
 if (YII_ENV_DEV) {
 
     $this->registerJsFile( 
-        'web/js/showtests.js', 
+        '/web/js/showtests.js', 
         ['depends'=>'app\assets\AppAsset']
     );
 }
