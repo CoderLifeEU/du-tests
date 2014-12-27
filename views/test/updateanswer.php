@@ -19,7 +19,7 @@ use kartik\widgets\FileInput;
                 'options' => ['accept' => 'image/*'],
                 'pluginOptions' => [
                     'initialPreview'=>[
-                        Html::img(Url::to(array('image/showquestionimage','name' => $model->image )), ['class'=>'file-preview-image', 'alt'=>'Image', 'title'=>'Image']),
+                        Html::img(Url::to(array('image/showanswerimage','name' => $model->image )), ['class'=>'file-preview-image', 'alt'=>'Image', 'title'=>'Image']),
                     ],
                     'initialCaption'=>"Image",
                     'overwriteInitial'=>true,
@@ -27,16 +27,9 @@ use kartik\widgets\FileInput;
                 ]
         ]); 
         ?>
-<?php echo $form->field($model, 'requiredanswercount')->textInput(); ?>
 
-<?php echo  $form->field($model, 'controltype')
-        ->dropDownList(
-            $model->controltypes,           // Flat array ('id'=>'label')
-            ['prompt'=>'']    // options
-        )
-    ?>
 
-<?php echo Html::activeHiddenInput($model, 'test_id') ?>
+<?php echo Html::activeHiddenInput($model, 'question_id') ?>
 <?php echo Html::activeHiddenInput($model, 'id') ?>
             
             
@@ -46,9 +39,3 @@ use kartik\widgets\FileInput;
 </div>
             
 <?php ActiveForm::end(); ?>
-
-<div class="row">
-        <div class="col-md-1 col-md-offset-11">
-            <a href="<?php echo Url::to(array('test/createanswer','questionid'=>$model->id)); ?>" class="btn btn-success">New</a>
-        </div>
- </div>

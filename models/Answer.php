@@ -70,4 +70,11 @@ class Answer extends \yii\db\ActiveRecord
         $obj = Answer::find()->asArray()->where('question_id = :id', ['id'=>$questionid])->all();
         return $obj;
     }
+	
+	    public static function getAnswer($id)
+    {
+        $obj = Answer::find()->where('id = :id', ['id'=>$id])->one();
+        
+        return $obj;
+    }
 }

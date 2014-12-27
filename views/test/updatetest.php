@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
 if (YII_ENV_DEV) 
 {
     $this->registerJsFile( 
-        'web/js/updatetest.js', 
+        '/web/js/updatetest.js', 
         ['depends'=>'app\assets\AppAsset']
     );
 }
