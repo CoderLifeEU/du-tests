@@ -51,4 +51,49 @@ use kartik\widgets\FileInput;
         <div class="col-md-1 col-md-offset-11">
             <a href="<?php echo Url::to(array('test/createanswer','questionid'=>$model->id)); ?>" class="btn btn-success">New</a>
         </div>
- </div>
+        
+        <div class="col-md-12" style="margin-top:20px;">
+        <table id="tests" class="table table-bordered table-striped dataTable" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Answer</th>
+                    <th>Is valid</th>
+                    <th>Score</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+             <tbody>
+                <tr>
+                </tr>
+             </tbody>
+        </table>
+    </div>
+        
+    </div>
+
+<?php
+if (YII_ENV_DEV) 
+{
+    $this->registerJsFile( 
+        '/web/js/updatequestion.js', 
+        ['depends'=>'app\assets\AppAsset']
+    );
+    $this->registerJsFile( 
+        '/web/libs/DataTables-1.10.0/media/js/jquery.dataTables.overrides.js', 
+        ['depends'=>'app\assets\AppAsset']
+    );
+}
+else
+{
+    $this->registerJsFile( 
+        'js/updatequestion.js', 
+        ['depends'=>'app\assets\AppAsset']
+    );
+    $this->registerJsFile( 
+        'libs/DataTables-1.10.0/media/js/jquery.dataTables.overrides.js', 
+        ['depends'=>'app\assets\AppAsset']
+    );
+}
+?>

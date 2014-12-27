@@ -349,6 +349,37 @@ class TestController extends Controller
         
     }
     
+    public function actionGetanswersfeed($id)
+    {
+        $answers = \app\models\Answer::getQuestionAnswersAsArray($id);
+        
+        $success=true;
+        
+        $answercount = count($answers);
+        
+        if($answercount<1)
+        {
+            $success = false;
+        }
+        
+        $i=0;
+        
+        while($i<$answercount)
+        {
+                $answers[$i]['actions']='<div class="text-center"><div class="btn-group btn-group-sm">'.
+                                        '<a type="button" href="updateanswer?id='.$answers[$i]['id'].'"class="btn btn-default btn-update-relationship" data-id="'.$answers[$i]['id'].'">Update</a>'.
+                                        '<a type="button" class="btn disabled btn-danger btn-delete-relationship" data-id="'.$answers[$i]['id'].'">Delete</a>'.
+                                      '</div></div>';
+                $i++;
+        }
+            
+        
+        $response = array("success"=>$success,"data"=>$answers);
+            
+        return json_encode($response);
+        
+    }
+    
     public function actionGetquestionsfeed($id)
     {
         $questions = \app\models\Question::getTestQuestionsAsArray($id);

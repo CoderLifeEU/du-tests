@@ -205,6 +205,21 @@
             var insertedhtml = template(context);
             stepscontent.html(insertedhtml);
             
+            self.rendercontrols();
+            
+            
+        }
+        
+        self.rendercontrols = function()
+        {
+            console.log("Rendering controls");
+            var controls = $('.icheck-control');
+            console.log(controls);
+            $('.icheck-control').iCheck({
+                checkboxClass: 'icheckbox_square-red',
+                radioClass: 'iradio_square-red',
+                increaseArea: '20%'
+              });
         }
         self.renderquestionNoEvent = function()
         {
@@ -215,6 +230,7 @@
             var template = Handlebars.compile(source);
             var insertedhtml = template(context);
             stepscontent.html(insertedhtml);
+            self.rendercontrols();
         }
         self.initArrows = function () {
  

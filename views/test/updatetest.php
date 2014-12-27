@@ -79,5 +79,20 @@ if (YII_ENV_DEV)
         '/web/js/updatetest.js', 
         ['depends'=>'app\assets\AppAsset']
     );
+    $this->registerJsFile( 
+        '/web/libs/DataTables-1.10.0/media/js/jquery.dataTables.overrides.js', 
+        ['depends'=>'app\assets\AppAsset']
+    );
+}
+else
+{
+    $this->registerJsFile( 
+        'js/updatetest.js', 
+        ['depends'=>'app\assets\AppAsset']
+    );
+    $this->registerJsFile( 
+        'libs/DataTables-1.10.0/media/js/jquery.dataTables.overrides.js', 
+        ['depends'=>'app\assets\AppAsset']
+    );
 }
 ?>

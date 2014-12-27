@@ -52,9 +52,10 @@ $config = [
                                 'showquestionimage' =>'image/showquestionimage',
                                 'updatequestion' => 'test/updatequestion',
                                 'preparetest' => 'test/preparetest',
-								'createanswer' =>'test/createanswer',
-								'updateanswer' => 'test/updateanswer',
-								'showanswerimage' =>'image/showanswerimage'
+                                'createanswer' =>'test/createanswer',
+                                'updateanswer' => 'test/updateanswer',
+                                'showanswerimage' =>'image/showanswerimage',
+                                'getanswersfeed' => 'test/getanswersfeed'
 								
 			),
 		),

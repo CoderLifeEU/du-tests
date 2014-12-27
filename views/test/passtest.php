@@ -21,7 +21,6 @@ $this->title = 'Pass test';
         
     </div>
 </div>
-
 <script id="question-step-template" type="text/x-handlebars-template">  
     <div class="step-content selected" data-id="{{id}}">
         <div class="row">
@@ -38,12 +37,58 @@ $this->title = 'Pass test';
         {{#if radio}}
             
         {{#each answers}}
-        <div class="col-md-12">
-            <input type="radio" name="group1" value="{{id}}"> {{name}}
+        <div class="col-sm-6 col-md-3">
+            <div class="thumbnail">
+            <img src="http://sprayitaway.com/wp-content/uploads/2013/08/apple_by_grv422-d5554a4.jpg" alt="...">
+                <div class="caption">
+           
+                    <p class="text-center">
+                        <input tabindex="12" type="radio" id="square-radio-{{id}}" name="square-radio" class="icheck-radio icheck-control">
+                        <label for="square-radio-{{id}}">{{name}}</label>        
+                    </p>
+    
+                    <p class="answer-description">{{description}}</p>
+
+                </div>
+            </div>
         </div>
+
+
         {{/each}}
                 
         {{/if}}
+                
+        {{#unless radio}}
+            {{#if checkbox}}
+                
+                {{#each answers}}
+                
+        <div class="col-sm-6 col-md-3">
+            <div class="thumbnail">
+            <img src="http://sprayitaway.com/wp-content/uploads/2013/08/apple_by_grv422-d5554a4.jpg" alt="...">
+                <div class="caption">
+           
+                    <p class="text-center">
+                        <input tabindex="12" type="checkbox" id="square-checkbox-{{id}}" name="square-checkbox" class="icheck-checkbox icheck-control">
+                        <label for="square-checkbox-{{id}}">{{name}}</label>        
+                    </p>
+    
+                    <p class="answer-description">{{description}}</p>
+
+                </div>
+            </div>
+        </div>
+                
+                {{/each}}
+                
+            {{/if}}
+                    
+            {{#unless checkbox}}
+            <div class="col-md-12 text-center"><h2>There are not answers for this question</h2></div>
+            {{/unless}}
+                    
+                    
+        {{/unless}}
         </div>
         
         </div>
