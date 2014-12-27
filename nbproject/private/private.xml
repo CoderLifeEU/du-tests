@@ -3,12 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/OpenServer/domains/du-tests/views/test/passtest.php</file>
+            <file>file:/C:/OpenServer/domains/du-tests/web/js/passtest.js</file>
             <file>file:/C:/OpenServer/domains/du-tests/vendor/yiisoft/extensions.php</file>
+            <file>file:/C:/OpenServer/domains/du-tests/models/Answer.php</file>
             <file>file:/C:/OpenServer/domains/du-tests/models/LoginForm.php</file>
+            <file>file:/C:/OpenServer/domains/du-tests/web/js/dutests.js</file>
+            <file>file:/C:/OpenServer/domains/du-tests/web/css/site.css</file>
+            <file>file:/C:/OpenServer/domains/du-tests/config/web.php</file>
             <file>file:/C:/OpenServer/domains/du-tests/models/Question.php</file>
             <file>file:/C:/OpenServer/domains/du-tests/controllers/TestController.php</file>
-            <file>file:/C:/OpenServer/domains/du-tests/views/test/createquestion.php</file>
             <file>file:/C:/OpenServer/domains/du-tests/models/QuestionForm.php</file>
+            <file>file:/C:/OpenServer/domains/du-tests/models/Test.php</file>
+            <file>file:/C:/OpenServer/domains/du-tests/assets/AppAsset.php</file>
         </group>
     </open-files>
 </project-private>
