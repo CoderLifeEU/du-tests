@@ -43,7 +43,7 @@ $this->title = 'Pass test';
                 <div class="caption">
            
                     <p class="text-center">
-                        <input tabindex="12" type="radio" id="square-radio-{{id}}" name="square-radio" class="icheck-radio icheck-control">
+                        <input tabindex="12" type="radio" id="square-radio-{{id}}" data-id="{{id}}" name="square-radio" class="icheck-radio icheck-control">
                         <label for="square-radio-{{id}}">{{name}}</label>        
                     </p>
     
@@ -69,7 +69,7 @@ $this->title = 'Pass test';
                 <div class="caption">
            
                     <p class="text-center">
-                        <input tabindex="12" type="checkbox" id="square-checkbox-{{id}}" name="square-checkbox" class="icheck-checkbox icheck-control">
+                        <input tabindex="12" type="checkbox" id="square-checkbox-{{id}}" data-id="{{id}}" name="square-checkbox" class="icheck-checkbox icheck-control">
                         <label for="square-checkbox-{{id}}">{{name}}</label>        
                     </p>
     

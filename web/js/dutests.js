@@ -19,12 +19,17 @@
         var btnteststep = null;
         var stepscontent = null;
         
+        var icheckradio = null;
+        var icheckcheckbox=null;
+        var icheckcontrol = null;
+        
         
         var defaults =
                     {
                         feedurl:null,
                         category:null,
                         testitems:null,
+                        answers:[],
                         total:null,
                         questions:null,
                         questioncount:null,
@@ -213,13 +218,85 @@
         self.rendercontrols = function()
         {
             console.log("Rendering controls");
-            var controls = $('.icheck-control');
-            console.log(controls);
-            $('.icheck-control').iCheck({
-                checkboxClass: 'icheckbox_square-red',
-                radioClass: 'iradio_square-red',
-                increaseArea: '20%'
-              });
+            
+            icheckcontrol = $('.icheck-control');
+            
+
+            icheckcontrol.on('ifUnchecked', function(event){
+                console.log("UNCKEKING");
+                for(var i=0;i<icheckcontrol.length;i++)
+                  {
+                      //console.log($(icheckcontrol[i]));
+                      var state = $(icheckcontrol[i]).prop('checked');
+                      console.log(i+" checkbox: "+state);
+                  }
+            });
+            icheckcontrol.on('ifChecked', function(event){
+                event.stopPropagation();
+                var checked = $(this);
+                var currentstep = self.find('.steps-scrollpane').find('.step.active');
+                var curquestion = currentstep.data('id');
+                var questionobject = $.grep(defaults.questions, function(e){ return e.id == curquestion; });
+                
+                
+              console.log(checked);
+              
+              if(questionobject[0].controltype=="checkbox")
+              {
+              setTimeout(function(){ 
+                  
+                  //$(checked).iCheck('uncheck');
+                  var checkedContainer = $(checked).closest('div.icheckbox_square-red');
+                  console.log(checkedContainer);
+                  checkedContainer.removeClass("checked");
+                  checkedContainer.prop("checked",false);
+                  
+                    var currentstep = self.find('.steps-scrollpane').find('.step.active');
+                    var curquestion = currentstep.data('id');
+                    var questionobject = $.grep(defaults.questions, function(e){ return e.id == curquestion; });
+                  
+                  var checkedcount = 0;
+                  
+                  for(var i=0;i<icheckcontrol.length;i++)
+                  {
+                      //console.log($(icheckcontrol[i]));
+                      var state = $(icheckcontrol[i]).prop('checked');
+                      if(state===true)
+                      {
+                          checkedcount++;
+                      }
+                      console.log(i+" checkbox: "+state);
+                  }
+                  console.log("CHECKED COUNT:"+checkedcount+" required:"+questionobject[0].requiredanswercount);
+                  console.log(questionobject[0].requiredanswercount);
+                  if(checkedcount<=questionobject[0].requiredanswercount)
+                  {
+                    checkedContainer.addClass("checked");
+                    checkedContainer.prop("checked",true);
+                      //$(checked).iCheck('check');
+                  }
+                  else
+                  {
+                      $(checked).iCheck('uncheck');
+                  }
+                  
+                  /*console.log(currentstep);
+                  console.log(questionobject[0]);
+                  console.log(icheckcontrol);
+                  console.log($(this));*/
+
+              
+              }, 1);
+            }
+              
+            }).iCheck({
+              checkboxClass: 'icheckbox_square-red',
+              radioClass: 'iradio_square-red',
+              increaseArea: '20%'
+            });
+            
+           
+
         }
         self.renderquestionNoEvent = function()
         {
