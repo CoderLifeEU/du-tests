@@ -55,7 +55,8 @@ $config = [
                                 'createanswer' =>'test/createanswer',
                                 'updateanswer' => 'test/updateanswer',
                                 'showanswerimage' =>'image/showanswerimage',
-                                'getanswersfeed' => 'test/getanswersfeed'
+                                'getanswersfeed' => 'test/getanswersfeed',
+                                'completetest' => 'test/completetest'
 								
 			),
 		),

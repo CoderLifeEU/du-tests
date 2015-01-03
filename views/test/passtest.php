@@ -13,6 +13,7 @@ use \yii\helpers\Url;
 app\assets\AppAsset::register($this);
 $this->title = 'Pass test';
 ?>
+<head><?= Html::csrfMetaTags() ?> </head>
 <div class="row">
 
     <div class="">
@@ -21,6 +22,8 @@ $this->title = 'Pass test';
         
     </div>
 </div>
+
+
 <script id="question-step-template" type="text/x-handlebars-template">  
     <div class="step-content selected" data-id="{{id}}">
         <div class="row">
@@ -128,7 +131,7 @@ $this->title = 'Pass test';
         <div class="steps-content">
         </div>
         <div class="step-buttons text-right">
-            <button class="btn btn-primary">Save Step</button>
+            <a class="btn btn-primary btn-complete-test">Complete test</a>
         </div>
     </div>
 </script>

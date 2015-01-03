@@ -23,6 +23,9 @@
         var icheckcheckbox=null;
         var icheckcontrol = null;
         
+        var btncomplete = null;
+        var btncompletevisible = false;
+        
         
         var defaults =
                     {
@@ -30,6 +33,7 @@
                         category:null,
                         testitems:null,
                         answers:[],
+                        results:[],
                         total:null,
                         questions:null,
                         questioncount:null,
@@ -73,6 +77,8 @@
             
             console.log(e);
             console.log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed}));
+            btncompletevisible = true;
+            btncomplete.show();
             selectedtest = e.val;
             self.gettest();
         });
@@ -116,6 +122,20 @@
             self.renderquestionNoEvent();
         }
         
+        self.fillunchecked = function()
+        {
+            console.log('Fill');
+            for(var i=0;i<defaults.results.length;i++)
+            {
+                for(var y=0;y<defaults.results[i].answers.length; y++)
+                {
+                    defaults.results[i].answers[y].result = false;
+                    console.log(defaults.results[i].answers[y]);
+                }
+            }
+            //console.log(defaults.results);
+        }
+        
         self.gettest = function()
         {
             //self.find("#wizard-choose-test").select2("enable", false);
@@ -132,6 +152,8 @@
                     {
                         defaults.questions = data.data;
                         defaults.questioncount = data.questioncount;
+                        defaults.results = data.data;
+                        self.fillunchecked();
                         self.rendertest();
                     }
                    
@@ -161,7 +183,6 @@
                         //self.renderselectItems();
                     }
                    
-
                 },
                 error: function (data) {
                 }
@@ -182,14 +203,62 @@
             scrollPanel = self.find('.steps ul');
             btnteststep = self.find('.step');
             stepscontent = self.find('.steps-content');
+            btncomplete = self.find('.btn-complete-test');
+            
+            if(btncompletevisible==true)
+            {
+                btncomplete.show();
+            }
+            else
+            {
+                btncomplete.hide();
+            }
             
             self.initArrows();
             
             btnstarttest.off("click.dutests");
             btnteststep.off("click.dutests");
+            btncomplete.off("click.dutests");
             
             btnstarttest.on("click.dutests",self.starttest);
             btnteststep.on("click.dutests",self.renderquestion);
+            btncomplete.on("click.dutests",self.completetest);
+        }
+        
+        self.completetest = function()
+        {
+            console.log("time to complete test");
+            console.log(defaults.results);
+            $.ajax({
+                url: "completetest",
+                type: "POST",
+                //contentType: "application/json; charset=utf-8",
+                data: {'items':defaults.results,'hikka':'alex'},
+                dataType: "json",
+                success: function (data) 
+                {
+                    
+                    if(data.success==true)
+                    {
+                        setTimeout(function () {
+                                swal({title: 'Success', text: 'Your results are send!', type: 'success', confirmButtonText: 'Ok'});
+                            }, 500);
+                    }
+                    else
+                    {
+                        setTimeout(function () {
+                                swal({title: 'Error', text: 'Something is wrong. Can not complete test!', type: 'error', confirmButtonText: 'Ok'});
+                            }, 500);
+                    }
+                   
+                },
+                error: function (data) 
+                {
+                    setTimeout(function () {
+                                swal({title: 'Error', text: 'Something is wrong. Can not complete test!', type: 'error', confirmButtonText: 'Ok'});
+                            }, 500);
+                }
+            });
         }
         
         self.renderquestion = function(event)
@@ -215,6 +284,55 @@
             
         }
         
+        self.changeanswerstate = function(questionid,answerid,state,controltype)
+        {
+            if(controltype=='radio')
+            {
+                //set all false except one
+                console.log("Radio is clicked, question:"+questionid+" answer:"+answerid+" state: "+state);
+                for(var i=0;i<defaults.results.length;i++)
+                {
+                    //console.log(defaults.results[i].id);
+                    if(defaults.results[i].id==questionid)
+                    {
+                        for(var y=0;y<defaults.results[i].answers.length; y++)
+                        {
+                            if(defaults.results[i].answers[y].id==answerid)
+                            {
+                                defaults.results[i].answers[y].result = state;
+                            }
+                            else
+                            {
+                                defaults.results[i].answers[y].result = false;
+                            }
+                            console.log(defaults.results[i].answers[y]);
+                        }
+                    }
+                }
+                
+            }
+            else if(controltype=='checkbox')
+            {
+                console.log("Checkbox is clicked, question:"+questionid+" answer:"+answerid+" state: "+state);
+                for(var i=0;i<defaults.results.length;i++)
+                {
+                    //console.log(defaults.results[i].id);
+                    if(defaults.results[i].id==questionid)
+                    {
+                        for(var y=0;y<defaults.results[i].answers.length; y++)
+                        {
+                            if(defaults.results[i].answers[y].id==answerid)
+                            {
+                                defaults.results[i].answers[y].result = state;
+                            }
+                        }
+                        console.log(defaults.results[i]);
+                    }
+                }
+                //change only one
+            }
+        }
+        
         self.rendercontrols = function()
         {
             console.log("Rendering controls");
@@ -223,12 +341,22 @@
             
 
             icheckcontrol.on('ifUnchecked', function(event){
-                console.log("UNCKEKING");
+                var checked = $(this);
+                var curanswerid = checked.data('id');
+                
+                console.log("Answer id:"+curanswerid);
+                
+                var currentstep = self.find('.steps-scrollpane').find('.step.active');
+                var curquestion = currentstep.data('id');
+                
+                console.log("UNCHEKING");
                 for(var i=0;i<icheckcontrol.length;i++)
                   {
                       //console.log($(icheckcontrol[i]));
                       var state = $(icheckcontrol[i]).prop('checked');
                       console.log(i+" checkbox: "+state);
+                      
+                      self.changeanswerstate(curquestion,curanswerid,false,'checkbox');
                   }
             });
             icheckcontrol.on('ifChecked', function(event){
@@ -239,8 +367,12 @@
                 var questionobject = $.grep(defaults.questions, function(e){ return e.id == curquestion; });
                 
                 
-              console.log(checked);
-              
+                console.log(checked);
+                
+                var curanswerid = checked.data('id');
+                
+                console.log("Answer id:"+curanswerid);
+                
               if(questionobject[0].controltype=="checkbox")
               {
               setTimeout(function(){ 
@@ -248,6 +380,7 @@
                   //$(checked).iCheck('uncheck');
                   var checkedContainer = $(checked).closest('div.icheckbox_square-red');
                   console.log(checkedContainer);
+                  
                   checkedContainer.removeClass("checked");
                   checkedContainer.prop("checked",false);
                   
@@ -273,6 +406,7 @@
                   {
                     checkedContainer.addClass("checked");
                     checkedContainer.prop("checked",true);
+                    self.changeanswerstate(curquestion,curanswerid,true,'checkbox');
                       //$(checked).iCheck('check');
                   }
                   else
@@ -287,6 +421,15 @@
 
               
               }, 1);
+            }
+            else if(questionobject[0].controltype=="radio")
+            {
+                console.log("Radio is clicked");
+                var currentstep = self.find('.steps-scrollpane').find('.step.active');
+                var curquestion = currentstep.data('id');
+                var questionobject = $.grep(defaults.questions, function(e){ return e.id == curquestion; });
+                //console.log(questionobject[0]);
+                self.changeanswerstate(curquestion,curanswerid,true,'radio');
             }
               
             }).iCheck({

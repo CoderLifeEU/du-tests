@@ -419,5 +419,19 @@ class TestController extends Controller
             );
     }
     
+    public function actionCompletetest()
+    {
+        $items = $_POST['items'];
+        print_r($items);
+        
+        $userid = 1;
+        
+        for($i=0;$i<count($items);$i++)
+        {
+            $questionid = $items[$i]['id'];
+            print_r($questionid);
+        }
+    }
+    
     
 }

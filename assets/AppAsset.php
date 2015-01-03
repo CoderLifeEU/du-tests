@@ -25,6 +25,7 @@ class AppAsset extends AssetBundle
         'libs/select2-3.5.0/select2.css',
         'libs/select2-3.5.0/select2-bootstrap.css',
         'libs/iCheck/skins/all.css',
+        'libs/sweetalert/lib/sweet-alert.css',
         'css/site.css',
     ];
     public $js = [
@@ -33,6 +34,7 @@ class AppAsset extends AssetBundle
             'libs/jquery-ui-1.11.2.custom/jquery-ui.js',
             'libs/select2-3.5.0/select2.js',
             'libs/iCheck/icheck.js',
+            'libs/sweetalert/lib/sweet-alert.js',
             'js/dutests.js',
     ];
     public $depends = [
