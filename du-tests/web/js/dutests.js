@@ -233,7 +233,7 @@
                 url: "completetest",
                 type: "POST",
                 //contentType: "application/json; charset=utf-8",
-                data: {'items':defaults.results,'hikka':'alex'},
+                data: {'items':defaults.results,'testid':selectedtest},
                 dataType: "json",
                 success: function (data) 
                 {

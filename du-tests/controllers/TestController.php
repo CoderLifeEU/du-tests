@@ -132,7 +132,8 @@ class TestController extends Controller
     {
         $model = new \app\models\AnswerForm();
         $model->question_id = $questionid;
-       
+        $model->image = 'default.png';
+        $domainmodel = new \app\models\Answer();
       
         if ($model->load(Yii::$app->request->post())&& $model->validate(null, false)) 
         {
@@ -145,6 +146,7 @@ class TestController extends Controller
             if($file->size!=0 && ($type=='image/png' || $type=='image/jpeg'))
             {
             $filetype='';
+            
             if($type=='image/png')
             {
                 $filetype='.png';
@@ -159,17 +161,20 @@ class TestController extends Controller
 
             $model->image = $filename.$filetype;
             
-            $domainmodel = new \app\models\Answer();
+            
+            }
+            
             $domainmodel->question_id = $model->question_id;
             $domainmodel->name = $model->name;
             $domainmodel->description = $model->description;
             $domainmodel->image = $model->image;
-            
+            $domainmodel->isvalid = $model->isvalid;
+            $domainmodel->score = $model->score;
             $domainmodel->save();
             
             
-            return $this->redirect(array('test/updateanswer','id'=>$model->id)); 
-            }
+            return $this->redirect(array('test/updateanswer','id'=>$domainmodel->id)); 
+            
         }
 		
         return $this->render('createanswer', array(
@@ -274,23 +279,39 @@ class TestController extends Controller
         $domainmodel = \app\models\Answer::getAnswer($id);
 
 			
-		$model->question_id = $domainmodel->question_id;
+	$model->question_id = $domainmodel->question_id;
         $model->name = $domainmodel->name;
         $model->description = $domainmodel->description;
         $model->id = $domainmodel->id;
-        $model->image = $domainmodel->image;
+        if(isset($domainmodel->image) && $domainmodel->image!='')
+        {
+            $model->image = $domainmodel->image;
+        }
+        else
+        {
+            $model->image="default.png";
+        }
         $model->isvalid = $domainmodel->isvalid;
         
         $model->score = $domainmodel->score;
+        
+        $domainmodel->isvalid = $model->isvalid;
+        $domainmodel->score = $model->score;
 			
 			
 			
 			
             if ($model->load(Yii::$app->request->post()) && $model->validate(null, false)) 
             {
-                $model->save();
+                $domainmodel->question_id = $model->question_id;
+                $domainmodel->name = $model->name;
+                $domainmodel->description = $model->description;
+                $domainmodel->image = $model->image;
+                $domainmodel->isvalid = $model->isvalid;
+                $domainmodel->score = $model->score;
+                $domainmodel->save();
 
-                return $this->redirect(array('test/showtests')); 
+                return $this->redirect(array('test/updatequestion','id'=>$domainmodel->question_id));
             }
 
             return $this->render('updateanswer', array(
@@ -422,14 +443,91 @@ class TestController extends Controller
     public function actionCompletetest()
     {
         $items = $_POST['items'];
-        print_r($items);
         
-        $userid = 1;
+        $testid = '';
+        $userid = '';
+        $isValid = true;
+        $history = new \app\models\testHistory();
+        $answers =[];
         
-        for($i=0;$i<count($items);$i++)
+        if(isset($_POST['testid']))
         {
-            $questionid = $items[$i]['id'];
-            print_r($questionid);
+            $testid = $_POST['testid'];
+        }
+               
+        if(isset($_COOKIE["moodleid"])) 
+        {
+            $userid = $_COOKIE["moodleid"];
+        } 
+        
+        if(isset($userid) && $userid!='' && isset($testid) && $testid!='')
+        {
+            $history = \app\models\testHistory::getActiveTest($testid, $userid);
+            
+            if($history==false)
+            {
+            
+            $history = new \app\models\testHistory();
+            $history->test_id = $testid;
+            $history->user_id = $userid;
+            $history->isactive = 1;
+            
+            }
+
+            /*print_r($testid);
+            die();
+
+            print_r($items);*/
+            for($i=0;$i<count($items);$i++)
+            {
+                $questionid = $items[$i]['id'];
+                $requiredanswercount = $items[$i]['requiredanswercount'];
+                
+                $currentAnswers = $items[$i]['answers'];
+                
+                $tempAnswers = [];
+                
+                $nothingSelected = true;
+                
+                for($y=0;$y<count($currentAnswers);$y++)
+                {
+                    if($currentAnswers[$y]['result']=='true')
+                    {
+                        array_push($tempAnswers, $currentAnswers[$y]);
+                        //print_r($currentAnswers[$y]);
+                        $nothingSelected = false;
+                    }
+                }
+                
+                if($requiredanswercount>=count($tempAnswers) && $nothingSelected == false)
+                {
+                    //create testhistory
+                    $answers = array_merge($answers, $tempAnswers);
+                }
+                else
+                {
+                    $isValid = false;
+                }
+                
+            }
+            
+            if($isValid==true)
+            {
+                //create test history
+                $history->isactive = 0;
+                $history->save();
+                $historyid=$history->getPrimaryKey();
+                //bulk insert answers
+                \app\models\userAnswer::createUserAnswersBulk($answers, $historyid);
+                
+                $result = array("success"=>$isValid,"data"=>"");
+            }
+            else
+            {
+                $result = array("success"=>$isValid,"data"=>"","error"=>"You did not fill test fields properly");
+            }
+            
+            return json_encode($result);
         }
     }
     

@@ -28,6 +28,11 @@ use kartik\widgets\FileInput;
         ]); 
         ?>
 
+<?php echo $form->field($model, 'isvalid', [
+        'template' => "<div class=\"col-lg-12\">{input}</div>\n<div class=\"col-lg-12\">{error}</div>",
+    ])->checkbox() ?>
+	
+	<?php echo $form->field($model, 'score')->textInput(); ?>
 
 <?php echo Html::activeHiddenInput($model, 'question_id') ?>
 <?php echo Html::activeHiddenInput($model, 'id') ?>
