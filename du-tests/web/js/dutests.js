@@ -25,6 +25,7 @@
         
         var btncomplete = null;
         var btncompletevisible = false;
+        var btnimg = false;
         
         
         var defaults =
@@ -195,6 +196,12 @@
             //self.initselect();
         }
 
+        self.showimg = function ()
+        {
+            var clicked = $(this);
+            var src = clicked.attr('src');
+            var imgWindow = window.open(src);
+        }
         self.refreshhandlers = function () 
         {
             btnstarttest = self.find('.btn-start-du-tests');
@@ -204,6 +211,7 @@
             btnteststep = self.find('.step');
             stepscontent = self.find('.steps-content');
             btncomplete = self.find('.btn-complete-test');
+            btnimg = self.find('.btn-img');
             
             if(btncompletevisible==true)
             {
@@ -213,16 +221,18 @@
             {
                 btncomplete.hide();
             }
-            
+            console.log(btnimg);
             self.initArrows();
             
             btnstarttest.off("click.dutests");
             btnteststep.off("click.dutests");
             btncomplete.off("click.dutests");
+            btnimg.off("click.dutests");
             
             btnstarttest.on("click.dutests",self.starttest);
             btnteststep.on("click.dutests",self.renderquestion);
             btncomplete.on("click.dutests",self.completetest);
+            btnimg.on("click.dutests",self.showimg);
         }
         
         self.completetest = function()
@@ -279,7 +289,7 @@
             var insertedhtml = template(context);
             stepscontent.html(insertedhtml);
             
-            self.rendercontrols();
+            self.rendercontrols(selectedquestion);
             
             
         }
@@ -333,7 +343,7 @@
             }
         }
         
-        self.rendercontrols = function()
+        self.rendercontrols = function(id)
         {
             console.log("Rendering controls");
             
@@ -438,7 +448,45 @@
               increaseArea: '20%'
             });
             
-           
+            if(id!=false)
+            {
+                console.log("Must mark answers for id:"+id);
+                //console.log(icheckcontrol);
+                
+                var resultquestionindex = 0;
+                for(var i=0;i<defaults.results.length;i++)
+                {
+                    if(defaults.results[i].id == id)
+                    {
+                        resultquestionindex = i;
+                    }
+                }
+                console.log("Look in q:"+resultquestionindex);
+                
+                //var questionobject = $.grep(defaults.questions, function(e){ return e.id == curquestion; });
+                for(var i=0;i<icheckcontrol.length;i++)
+                {
+                    var controlid = $(icheckcontrol[i]).data('id');
+                    for(var y=0;y<defaults.results[resultquestionindex].answers.length;y++)
+                    {
+                        //console.log(defaults.results[resultquestionindex].answers[y]);
+                        if(controlid==defaults.results[resultquestionindex].answers[y].id)
+                        {
+                            console.log("Control id:"+controlid);
+                            if(defaults.results[resultquestionindex].answers[y].result==true)
+                            {
+                                $(icheckcontrol[i]).iCheck('check');
+                                console.log($(icheckcontrol));
+                            }
+                            //console.log("Control id:"+controlid);
+                        }
+                    }
+                    //console.log("Control id:"+controlid);
+                    //console.log(defaults.results);
+                }
+            }
+            
+           self.refreshhandlers();
 
         }
         self.renderquestionNoEvent = function()
@@ -450,7 +498,7 @@
             var template = Handlebars.compile(source);
             var insertedhtml = template(context);
             stepscontent.html(insertedhtml);
-            self.rendercontrols();
+            self.rendercontrols(false);
         }
         self.initArrows = function () {
  
