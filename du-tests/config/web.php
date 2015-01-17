@@ -56,7 +56,11 @@ $config = [
                                 'updateanswer' => 'test/updateanswer',
                                 'showanswerimage' =>'image/showanswerimage',
                                 'getanswersfeed' => 'test/getanswersfeed',
-                                'completetest' => 'test/completetest'
+                                'completetest' => 'test/completetest',
+                                'gettestresultsfeed'=>'test/gettestresultsfeed',
+                                'updateresult'=>'test/updateresult',
+                                'createresult'=>'test/createresult',
+                                'getresultsfeed'=>'test/getresultsfeed'
 								
 			),
 		),

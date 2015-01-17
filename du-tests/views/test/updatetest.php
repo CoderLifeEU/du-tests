@@ -53,22 +53,45 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         
         <div class="col-md-12" style="margin-top:20px;">
-        <table id="tests" class="table table-bordered table-striped dataTable" cellspacing="0" width="100%">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Question Name</th>
-                    <th>Description</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
+            <table id="tests" class="table table-bordered table-striped dataTable" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Question Name</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
 
-             <tbody>
-                <tr>
-                </tr>
-             </tbody>
-        </table>
-    </div>
+                 <tbody>
+                    <tr>
+                    </tr>
+                 </tbody>
+            </table>
+        </div>
+     
+     <div class="col-md-1 col-md-offset-11">
+            <a href="<?php echo Url::to(array('test/createresult','testid'=>$model->id)); ?>" class="btn btn-success">New</a>
+        </div>
+     <div class="col-md-12" style="margin-top:20px;">
+            <table id="testresults" class="table table-bordered table-striped dataTable" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Result</th>
+                        <th>MinScore</th>
+                        <th>MaxScore</th>
+                        <th>IsActive</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                 <tbody>
+                    <tr>
+                    </tr>
+                 </tbody>
+            </table>
+        </div>
         
     </div>
 
@@ -79,19 +102,11 @@ if (YII_ENV_DEV)
         'du-tests/web/js/updatetest.js', 
         ['depends'=>'app\assets\AppAsset']
     );
-    $this->registerJsFile( 
-        'du-tests/web/libs/DataTables-1.10.0/media/js/jquery.dataTables.overrides.js', 
-        ['depends'=>'app\assets\AppAsset']
-    );
 }
 else
 {
     $this->registerJsFile( 
         'du-tests/js/updatetest.js', 
-        ['depends'=>'app\assets\AppAsset']
-    );
-    $this->registerJsFile( 
-        'du-tests/libs/DataTables-1.10.0/media/js/jquery.dataTables.overrides.js', 
         ['depends'=>'app\assets\AppAsset']
     );
 }

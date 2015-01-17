@@ -40,5 +40,9 @@ $this->title = 'Du Tests';
             <a href="<?php echo Url::to(array('test/passtest')); ?>" class="btn btn-success">Pass test</a>
         </div>
         
+        <div class="col-md-3 text-center">
+            <a href="<?php echo Url::to(array('test/showresults')); ?>" class="btn btn-success">Show Results</a>
+        </div>
+        
     </div>
 </div>

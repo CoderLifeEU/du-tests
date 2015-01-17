@@ -35,6 +35,7 @@ class AppAsset extends AssetBundle
             'libs/select2-3.5.0/select2.js',
             'libs/iCheck/icheck.js',
             'libs/sweetalert/lib/sweet-alert.js',
+            'libs/DataTables-1.10.0/media/js/jquery.dataTables.overrides.js',
             'js/dutests.js',
     ];
     public $depends = [

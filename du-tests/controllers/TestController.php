@@ -52,6 +52,31 @@ class TestController extends Controller
         return $this->render('showtests');
     }
     
+    public function actionShowresults()
+    {
+        return $this->render('showresults');
+    }
+    
+    public function actionCreateresult($testid)
+    {
+        $model = new \app\models\testResult();
+        
+        $model->test_id = $testid;
+        
+        $model->load(Yii::$app->request->post());
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate(null, false)) 
+        {
+            $model->save();
+            
+            return $this->redirect(array('test/updatetest','id'=>$model->test_id));
+        }
+        
+        return $this->render('createtestresult', array(
+                        'model' => $model,
+            ));
+    }
+    
     public function actionCreatetest()
     {
         $model = new \app\models\Test();
@@ -183,7 +208,22 @@ class TestController extends Controller
         
     }//actionCreateanswer
 	
-	
+    public function actionUpdateresult($id)
+    {
+        $model = \app\models\testResult::getTestResult($id);
+        
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate(null, false)) 
+        {
+            $model->save();
+            
+            return $this->redirect(array('test/updatetest','id'=>$model->test_id)); 
+        }
+        
+        return $this->render('updateresult', array(
+                        'model' => $model,
+            ));
+    }
 	
     public function actionUpdatequestion($id)
     {
@@ -339,6 +379,41 @@ class TestController extends Controller
             ));
     }
     
+    public function actionGetresultsfeed()
+    {
+        $userid = 0;
+        if(isset($_COOKIE["moodleid"])) 
+        {
+            $userid = $_COOKIE["moodleid"];
+        } 
+        
+        $results = \app\models\testHistory::getUserResultsAsArray($userid);
+        
+        $success=true;
+        
+        $resultscount = count($results);
+        
+        if($resultscount<1)
+        {
+            $success = false;
+        }
+        
+        $i=0;
+        
+        while($i<$resultscount)
+        {
+                $results[$i]['actions']='<div class="text-center"><div class="btn-group btn-group-sm">'.
+                                        '<a type="button" href="showresult?id='.$results[$i]['id'].'"class="btn btn-default btn-update-relationship" data-id="'.$results[$i]['id'].'">Show Result</a>'.
+                                      '</div></div>';
+                $i++;
+        }
+            
+        
+        $response = array("success"=>$success,"data"=>$results);
+            
+        return json_encode($response);
+    }
+    
     public function actionGettestsfeed()
     {
         $tests = \app\models\Test::getTestsAsArray();
@@ -398,6 +473,38 @@ class TestController extends Controller
         $response = array("success"=>$success,"data"=>$answers);
             
         return json_encode($response);
+        
+    }
+    
+    public function actionGettestresultsfeed($id)
+    {
+        $results = \app\models\testResult::getTestResultsAsArray($id);
+        
+        $success=true;
+        
+        $resultscount = count($results);
+        
+        if($resultscount<1)
+        {
+            $success = false;
+        }
+        
+        $i=0;
+        
+        while($i<$resultscount)
+        {
+                $results[$i]['actions']='<div class="text-center"><div class="btn-group btn-group-sm">'.
+                                        '<a type="button" href="updateresult?id='.$results[$i]['id'].'"class="btn btn-default btn-update-result" data-id="'.$results[$i]['id'].'">Update</a>'.
+                                        '<a type="button" class="btn disabled btn-danger btn-delete-result" data-id="'.$results[$i]['id'].'">Delete</a>'.
+                                      '</div></div>';
+                $i++;
+        }
+            
+        
+        $response = array("success"=>$success,"data"=>$results);
+            
+        return json_encode($response);
+        
         
     }
     

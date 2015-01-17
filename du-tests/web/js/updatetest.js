@@ -16,5 +16,22 @@ var table = $('#tests').dataTable( {
                             { "bSortable": false, "aTargets": [ 3 ] }
                         ]  
             });
+            
+            var tableresults = $('#testresults').dataTable( {
+                "ajax": 'gettestresultsfeed?id='+testid,
+                "columns": [
+                                { "data": "id" },
+                                { "data": "name" },
+                                { "data": "min_score" },
+                                { "data": "max_score" },
+                                { "data": "isactive" },
+                                { "data": "actions" }
+                            ],
+                "bSort": true,
+                "aoColumnDefs": 
+                        [
+                            { "bSortable": false, "aTargets": [ 3 ] }
+                        ]  
+            });
 });
 

@@ -83,4 +83,25 @@ class testHistory extends \yii\db\ActiveRecord
         return $obj;
     }
     
+    public static function connection()
+    {
+        return \Yii::$app->db;
+    }
+    
+    public static function getUserResults($userid)
+    {
+        $obj = testHistory::find()->where('user_id = :userid and isactive=0', ['userid'=>$userid])->all();
+        return $obj;
+    }
+    
+    public static function getUserResultsAsArray($userid)
+    {
+        
+        $obj = testHistory::find()
+                ->select("test_history.id,test_history.user_id,test_history.completed,test_history.test_id,test_history.isactive,test.name")
+                ->innerJoin("test", "test.id = test_history.test_id")
+                ->asArray()->where('user_id = :userid and test_history.isactive=0', ['userid'=>$userid])->all();
+        return $obj;
+    }
+    
 }
