@@ -59,7 +59,7 @@
         
         self.formatItem = function (item) 
         {
-            console.log(item);
+            //console.log(item);
             if (!item.image) return item.name; // optgroup
             return "<img class='selectavatar' src='"+item.image+"' />" + item.name;
             //return "<img class='flag' src='images/flags/" + state.id.toLowerCase() + ".png'/>" + state.text;
@@ -76,8 +76,8 @@
         .on("change", function(e) 
         { 
             
-            console.log(e);
-            console.log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed}));
+            //console.log(e);
+            //console.log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed}));
             btncompletevisible = true;
             btncomplete.show();
             selectedtest = e.val;
@@ -125,13 +125,13 @@
         
         self.fillunchecked = function()
         {
-            console.log('Fill');
+            //console.log('Fill');
             for(var i=0;i<defaults.results.length;i++)
             {
                 for(var y=0;y<defaults.results[i].answers.length; y++)
                 {
                     defaults.results[i].answers[y].result = false;
-                    console.log(defaults.results[i].answers[y]);
+                    //console.log(defaults.results[i].answers[y]);
                 }
             }
             //console.log(defaults.results);
@@ -164,7 +164,7 @@
                 }
             });
             
-            console.log('gettest');
+            //console.log('gettest');
         }
         self.gettestitems = function () {
 
@@ -192,7 +192,7 @@
 
         self.renderselectItems = function()
         {
-            console.log("Rendering items into dropdown");
+            //console.log("Rendering items into dropdown");
             //self.initselect();
         }
 
@@ -221,7 +221,7 @@
             {
                 btncomplete.hide();
             }
-            console.log(btnimg);
+            
             self.initArrows();
             
             btnstarttest.off("click.dutests");
@@ -238,8 +238,8 @@
         self.completetest = function()
         {
             console.log("time to complete test");
-            console.log(defaults.results);
-            $.ajax({
+            //console.log(defaults.results);
+            /*$.ajax({
                 url: "completetest",
                 type: "POST",
                 //contentType: "application/json; charset=utf-8",
@@ -268,7 +268,7 @@
                                 swal({title: 'Error', text: 'Something is wrong. Can not complete test!', type: 'error', confirmButtonText: 'Ok'});
                             }, 500);
                 }
-            });
+            });*/
         }
         
         self.renderquestion = function(event)
@@ -282,6 +282,18 @@
             var selectedquestion = clickedbtn.data('id');
             var selectedstep = clickedbtn.data('step');
             var item = defaults.questions[selectedstep-1];
+            for(var i=0;i<item.answers.length;i++)
+            {
+                if(item.answers[i].image!="" && item.answers[i].image!=false)
+                {
+                    item.answers[i].isimage=true;
+                }
+                else
+                {
+                     item.answers[i].isimage=false;
+                }
+            }
+            console.log("ITEM TO RENDER");
             console.log(item);
             var context = item;
             var source = $("#question-step-template").html();
@@ -315,7 +327,7 @@
                             {
                                 defaults.results[i].answers[y].result = false;
                             }
-                            console.log(defaults.results[i].answers[y]);
+                            //console.log(defaults.results[i].answers[y]);
                         }
                     }
                 }
@@ -336,7 +348,7 @@
                                 defaults.results[i].answers[y].result = state;
                             }
                         }
-                        console.log(defaults.results[i]);
+                        //console.log(defaults.results[i]);
                     }
                 }
                 //change only one
@@ -364,7 +376,7 @@
                   {
                       //console.log($(icheckcontrol[i]));
                       var state = $(icheckcontrol[i]).prop('checked');
-                      console.log(i+" checkbox: "+state);
+                      //console.log(i+" checkbox: "+state);
                       
                       self.changeanswerstate(curquestion,curanswerid,false,'checkbox');
                   }
@@ -377,7 +389,7 @@
                 var questionobject = $.grep(defaults.questions, function(e){ return e.id == curquestion; });
                 
                 
-                console.log(checked);
+                //console.log(checked);
                 
                 var curanswerid = checked.data('id');
                 
@@ -389,7 +401,7 @@
                   
                   //$(checked).iCheck('uncheck');
                   var checkedContainer = $(checked).closest('div.icheckbox_square-red');
-                  console.log(checkedContainer);
+                  //console.log(checkedContainer);
                   
                   checkedContainer.removeClass("checked");
                   checkedContainer.prop("checked",false);
@@ -408,10 +420,10 @@
                       {
                           checkedcount++;
                       }
-                      console.log(i+" checkbox: "+state);
+                      //console.log(i+" checkbox: "+state);
                   }
                   console.log("CHECKED COUNT:"+checkedcount+" required:"+questionobject[0].requiredanswercount);
-                  console.log(questionobject[0].requiredanswercount);
+                  //console.log(questionobject[0].requiredanswercount);
                   if(checkedcount<=questionobject[0].requiredanswercount)
                   {
                     checkedContainer.addClass("checked");

@@ -74,7 +74,7 @@ class ImageController extends Controller
         {
             if($name==false || is_null($name) || !isset($name))
             {
-                $name='default.jpg';
+                $name='default.png';
             }
             $exists = false;
             $dir = Yii::getAlias('@app/uploads/answers');
@@ -92,7 +92,7 @@ class ImageController extends Controller
             }
             else
             {
-                $itemPath = $dir.'/'.'default.jpg';
+                $itemPath = $dir.'/'.'default.png';
                 $imginfo = getimagesize($itemPath);
                 header("Content-type:".$imginfo['mime']);
                 readfile($itemPath);

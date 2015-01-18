@@ -81,4 +81,10 @@ class testResult extends \yii\db\ActiveRecord
         return $obj;
     }
     
+    public static function getUserTestResult($testid,$score)
+    {
+        $obj = testResult::find()->where('test_id=:testid and :score>=min_score and :score<=max_score', ['testid'=>$testid,'score'=>$score])->one();
+        return $obj;
+    }
+    
 }

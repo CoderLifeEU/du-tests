@@ -152,6 +152,28 @@ class TestController extends Controller
         
     }
     
+    public function actionShowresult($id)
+    {
+        $this->layout = 'mainsimple';
+        
+        $score = \app\models\testHistory::getUserTestResult($id);
+        $history = new \app\models\testHistory();
+        $history = \app\models\testHistory::getTestHistory($id);
+        $test = \app\models\Test::getTest($history->test_id);
+        
+        $result = new \app\models\testResult();
+        $result = \app\models\testResult::getUserTestResult($history->test_id, $score);
+        
+        /*print_r($result);
+        die();*/
+        return $this->render('showresult', array(
+                        'result' => $result,
+                        'test' => $test,
+                        'score'=>$score,
+                        'history'=>$history
+            ));
+    }
+    
 	
     public function actionCreateanswer($questionid)
     {
@@ -343,10 +365,40 @@ class TestController extends Controller
 			
             if ($model->load(Yii::$app->request->post()) && $model->validate(null, false)) 
             {
+                
+            $dir = Yii::getAlias('@app/uploads/answers');
+            $uploaded = false;
+            $file = \yii\web\UploadedFile::getInstance($model,'image');
+            $type = $file->type;
+            
+
+            if($file->size!=0 && ($type=='image/png' || $type=='image/jpeg'))
+            {
+            $filetype='';
+            if($type=='image/png')
+            {
+                $filetype='.png';
+            }
+            else if($type=='image/jpeg')
+            {
+                $filetype='.jpg';
+            }
+
+            $filename =  uniqid().$filetype;
+            $uploaded = $file->saveAs($dir.'/'.$filename);
+
+            $model->image = $filename;
+            
+            }
+
+            
                 $domainmodel->question_id = $model->question_id;
                 $domainmodel->name = $model->name;
                 $domainmodel->description = $model->description;
-                $domainmodel->image = $model->image;
+                if($filename!='')
+                {
+                    $domainmodel->image = $filename;
+                }
                 $domainmodel->isvalid = $model->isvalid;
                 $domainmodel->score = $model->score;
                 $domainmodel->save();

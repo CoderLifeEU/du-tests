@@ -60,7 +60,8 @@ $config = [
                                 'gettestresultsfeed'=>'test/gettestresultsfeed',
                                 'updateresult'=>'test/updateresult',
                                 'createresult'=>'test/createresult',
-                                'getresultsfeed'=>'test/getresultsfeed'
+                                'getresultsfeed'=>'test/getresultsfeed',
+                                'showresult'=>'test/showresult'
 								
 			),
 		),

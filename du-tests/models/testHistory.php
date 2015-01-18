@@ -94,6 +94,12 @@ class testHistory extends \yii\db\ActiveRecord
         return $obj;
     }
     
+    public static function getTestHistory($id)
+    {
+        $obj = testHistory::find()->where('id = :historyid', ['historyid'=>$id])->one();
+        return $obj;
+    }
+    
     public static function getUserResultsAsArray($userid)
     {
         
@@ -102,6 +108,18 @@ class testHistory extends \yii\db\ActiveRecord
                 ->innerJoin("test", "test.id = test_history.test_id")
                 ->asArray()->where('user_id = :userid and test_history.isactive=0', ['userid'=>$userid])->all();
         return $obj;
+    }
+    
+    public static function getUserTestResult($id)
+    {
+        $commandtext = "SELECT sum(answer.score) as score FROM test_history
+                        inner join user_answer on user_answer.test_history_id=test_history.id
+                        inner join answer on answer.id = user_answer.answer_id
+                        where test_history.id=".$id;
+
+
+        $command = self::connection()->createCommand($commandtext)->queryScalar();
+        return $command;
     }
     
 }
