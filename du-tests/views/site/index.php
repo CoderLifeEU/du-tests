@@ -31,18 +31,46 @@ $this->title = 'Du Tests';
        
     </div>
 
+    
     <div class="row">
-        <div class="col-md-3 text-center">
-            <a href="<?php echo Url::to(array('test/showtests')); ?>" class="btn btn-success">Show tests</a>
-        </div>
-        
-        <div class="col-md-3 text-center">
-            <a href="<?php echo Url::to(array('test/passtest')); ?>" class="btn btn-success">Pass test</a>
-        </div>
-        
-        <div class="col-md-3 text-center">
-            <a href="<?php echo Url::to(array('test/showresults')); ?>" class="btn btn-success">Show Results</a>
-        </div>
-        
-    </div>
+              <div class="col-md-4 text-center">
+                  <a href="<?php echo Url::to(array('test/showtests')); ?>" class="icon-box float-shadow btn-main-nav">
+                      <i class="fa fa-copy"></i>
+                      <h2>Show tests</h2>
+                      <p>Go to test administrative panel</p>
+                  </a>
+              </div>
+              
+              <div class="col-md-4 text-center">
+                 <a href="<?php echo Url::to(array('test/passtest')); ?>" class="icon-box float-shadow btn-main-nav">
+                      <i class="fa fa-graduation-cap"></i>
+                      <h2>Pass test</h2>
+                      <p>Try to pass tests</p>
+                  </a>
+              </div>
+              
+              <div class="col-md-4 text-center">
+                <a href="<?php echo Url::to(array('test/showresults')); ?>" class="icon-box float-shadow btn-main-nav">
+                    <i class="fa fa-area-chart"></i>
+                    <h2>Show Results</h2>
+                    <p>View tests results</p>
+                </a>
+              </div>
+          </div>
 </div>
+<?php
+if (YII_ENV_DEV) {
+
+    $this->registerCssFile( 
+        'du-tests/web/libs/hover-css/css/hover.css', 
+        ['depends'=>'app\assets\AppAsset']
+    );
+}
+else
+{
+    $this->registerCssFile( 
+        'du-tests/web/libs/hover-css/css/hover.css', 
+        ['depends'=>'app\assets\AppAsset']
+    );
+}
+?>
