@@ -270,3 +270,21 @@ box-shadow: none;
 .btn-img{
     max-height: 190px;
 }
+.actions-wrap {
+    text-align: center;
+}
+body {
+    font-family: "Source Sans Pro",sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+}
+.btn-main-nav{
+    color: #C0B5B5;
+}
+a.btn-main-nav:hover{
+    text-decoration: none;
+    color:#e74c3c;
+}
+.btn-main-nav i{
+    font-size:72px;
+}
