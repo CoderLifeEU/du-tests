@@ -3,9 +3,9 @@ use yii\helpers\Html;
 use \yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 use kartik\widgets\FileInput;
+use yii\bootstrap\NavBar;
 
 ?>
-
 
  <?php $form = ActiveForm::begin(array('options' => array('class' => '', 'id' => 'question-form','enctype'=>'multipart/form-data'))); ?>
             
@@ -41,8 +41,8 @@ use kartik\widgets\FileInput;
             
             
             
-            
 <div class="form-actions text-center">
+ <a href="<?php echo Url::to(array('test/updatetest','id'=>$model->test_id)); ?>" class="btn btn-success">Back</a>
     <?php echo Html::submitButton('Create', array('class' => 'btn btn-primary')); ?>
 </div>
             

@@ -42,6 +42,7 @@ use kartik\widgets\FileInput;
             
             
 <div class="form-actions text-center">
+<a href="<?php echo Url::to(array('test/updatequestion','id'=>$model->question_id)); ?>" class="btn btn-success">Back</a>
     <?php echo Html::submitButton('Create', array('class' => 'btn btn-primary')); ?>
 </div>
             

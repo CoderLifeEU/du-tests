@@ -45,6 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="form-group">
         <div class="col-lg-12">
+        <a href="<?php echo Url::to(array('test/updatetest','id'=>$model->test_id)); ?>" class="btn btn-success">Back</a>
             <?= Html::submitButton('Update', ['class' => 'btn btn-primary', 'name' => 'test-result-update-button']) ?>
         </div>
     </div>

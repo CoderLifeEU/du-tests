@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use \yii\helpers\Url;
 /**
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
@@ -34,11 +34,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="form-group">
         <div class="col-lg-12">
+         <a href="<?php echo Url::to(array('test/showtests')); ?>" class="btn btn-success">Back</a>
             <?= Html::submitButton('Create', ['class' => 'btn btn-primary', 'name' => 'test-create-button']) ?>
         </div>
     </div>
 
     <?php ActiveForm::end(); ?>
     </div>
-
 </div>

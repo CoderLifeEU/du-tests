@@ -18,7 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?php echo Html::encode($this->title) ?></h1>
 
     <p>Please fill out the following fields to create test:</p>
-
     <?php $form = ActiveForm::begin([
         'id' => 'test-create-form',
         'options' => ['class' => 'form-horizontal','enctype'=>'multipart/form-data'],
@@ -38,7 +37,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="form-group">
         <div class="col-lg-12">
+             <a href="<?php echo Url::to(array('test/showtests')); ?>" class="btn btn-success">Back</a>
             <?= Html::submitButton('Update', ['class' => 'btn btn-primary', 'name' => 'test-update-button']) ?>
+        </div>
+         <div class="col-md-3 text-center">
+           
         </div>
     </div>
 

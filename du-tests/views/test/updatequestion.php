@@ -42,10 +42,10 @@ use kartik\widgets\FileInput;
             
             
 <div class="form-actions text-center">
+ <a href="<?php echo Url::to(array('test/updatetest','id'=>$model->test_id)); ?>" class="btn btn-success">Back</a>
     <?php echo Html::submitButton('Update', array('class' => 'btn btn-primary')); ?>
 </div>
             
-<?php ActiveForm::end(); ?>
 
 <div class="row">
         <div class="col-md-1 col-md-offset-11">
