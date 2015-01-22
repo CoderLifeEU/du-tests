@@ -108,27 +108,33 @@ class TestController extends Controller
             $dir = Yii::getAlias('@app/uploads/questions');
             $uploaded = false;
             $file = \yii\web\UploadedFile::getInstance($model,'image');
-            $type = $file->type;
-            
+            $type = "";
 
+            if(!is_null($file) && $file!=false)
+            {
+               $type = $file->type;
             if($file->size!=0 && ($type=='image/png' || $type=='image/jpeg'))
-            {
-            $filetype='';
-            if($type=='image/png')
-            {
-                $filetype='.png';
-            }
-            else if($type=='image/jpeg')
-            {
-                $filetype='.jpg';
-            }
+                {
+                    $filetype='';
+                    if($type=='image/png')
+                    {
+                        $filetype='.png';
+                    }
+                    else if($type=='image/jpeg')
+                    {
+                        $filetype='.jpg';
+                    }
 
-            $filename =  uniqid().$filetype;
-            $uploaded = $file->saveAs($dir.'/'.$filename);
+                    $filename =  uniqid().$filetype;
+                    $uploaded = $file->saveAs($dir.'/'.$filename);
 
-            $model->image = $filename;
+                    $model->image = $filename;
+
+                }
+            }
             
-            }
+
+            
             $domainmodel = new \app\models\Question();
             $domainmodel->test_id = $model->test_id;
             $domainmodel->name = $model->name;
@@ -187,28 +193,30 @@ class TestController extends Controller
             $dir = Yii::getAlias('@app/uploads/answers');
             $uploaded = false;
             $file = \yii\web\UploadedFile::getInstance($model,'image');
-            $type = $file->type;
+            $type = "";
             
 
+            if(!is_null($file) && $file!=false)
+            {
+               $type = $file->type;
             if($file->size!=0 && ($type=='image/png' || $type=='image/jpeg'))
-            {
-            $filetype='';
-            
-            if($type=='image/png')
-            {
-                $filetype='.png';
-            }
-            else if($type=='image/jpeg')
-            {
-                $filetype='.jpg';
-            }
+                {
+                    $filetype='';
+                    if($type=='image/png')
+                    {
+                        $filetype='.png';
+                    }
+                    else if($type=='image/jpeg')
+                    {
+                        $filetype='.jpg';
+                    }
 
-            $filename =  uniqid().$filetype;
-            $uploaded = $file->saveAs($dir.'/'.$filename);
+                    $filename =  uniqid().$filetype;
+                    $uploaded = $file->saveAs($dir.'/'.$filename);
 
-            $model->image = $filename.$filetype;
-            
-            
+                    $model->image = $filename;
+
+                }
             }
             
             $domainmodel->question_id = $model->question_id;
@@ -268,26 +276,31 @@ class TestController extends Controller
             $dir = Yii::getAlias('@app/uploads/questions');
             $uploaded = false;
             $file = \yii\web\UploadedFile::getInstance($model,'image');
-            $type = $file->type;
+             $type = "";
+             $filename ="";
             
 
+            if(!is_null($file) && $file!=false)
+            {
+               $type = $file->type;
             if($file->size!=0 && ($type=='image/png' || $type=='image/jpeg'))
-            {
-            $filetype='';
-            if($type=='image/png')
-            {
-                $filetype='.png';
-            }
-            else if($type=='image/jpeg')
-            {
-                $filetype='.jpg';
-            }
+                {
+                    $filetype='';
+                    if($type=='image/png')
+                    {
+                        $filetype='.png';
+                    }
+                    else if($type=='image/jpeg')
+                    {
+                        $filetype='.jpg';
+                    }
 
-            $filename =  uniqid().$filetype;
-            $uploaded = $file->saveAs($dir.'/'.$filename);
+                    $filename =  uniqid().$filetype;
+                    $uploaded = $file->saveAs($dir.'/'.$filename);
 
-            $model->image = $filename;
-            
+                    $model->image = $filename;
+
+                }
             }
             $domainmodel = new \app\models\Question();
             $domainmodel = \app\models\Question::getQuestion($model->id);
@@ -369,26 +382,30 @@ class TestController extends Controller
             $dir = Yii::getAlias('@app/uploads/answers');
             $uploaded = false;
             $file = \yii\web\UploadedFile::getInstance($model,'image');
-            $type = $file->type;
+             $type = "";
             
 
+            if(!is_null($file) && $file!=false)
+            {
+               $type = $file->type;
             if($file->size!=0 && ($type=='image/png' || $type=='image/jpeg'))
-            {
-            $filetype='';
-            if($type=='image/png')
-            {
-                $filetype='.png';
-            }
-            else if($type=='image/jpeg')
-            {
-                $filetype='.jpg';
-            }
+                {
+                    $filetype='';
+                    if($type=='image/png')
+                    {
+                        $filetype='.png';
+                    }
+                    else if($type=='image/jpeg')
+                    {
+                        $filetype='.jpg';
+                    }
 
-            $filename =  uniqid().$filetype;
-            $uploaded = $file->saveAs($dir.'/'.$filename);
+                    $filename =  uniqid().$filetype;
+                    $uploaded = $file->saveAs($dir.'/'.$filename);
 
-            $model->image = $filename;
-            
+                    $model->image = $filename;
+
+                }
             }
 
             

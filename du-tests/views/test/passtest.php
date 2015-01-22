@@ -42,7 +42,7 @@ $this->title = 'Pass test';
         {{#each answers}}
         <div class="col-sm-6 col-md-3">
             <div class="thumbnail">
-            <img src="http://sprayitaway.com/wp-content/uploads/2013/08/apple_by_grv422-d5554a4.jpg" alt="..." class="btn-img">
+            <img src="showanswerimage?name={{image}}" alt="..." class="btn-img">
                 <div class="caption">
            
                     <p class="text-center">
@@ -68,7 +68,7 @@ $this->title = 'Pass test';
                 
         <div class="col-sm-6 col-md-3">
             <div class="thumbnail">
-            <img src="http://sprayitaway.com/wp-content/uploads/2013/08/apple_by_grv422-d5554a4.jpg" alt="..." class="btn-img">
+            <img src="showanswerimage?name={{image}}" alt="..." class="btn-img">
                 <div class="caption">
            
                     <p class="text-center">
